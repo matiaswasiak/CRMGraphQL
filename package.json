@@ -1,0 +1,20 @@
+{
+  "name": "crmgraphqlcurso",
+  "version": "1.0.0",
+  "description": "Curso de GraphQL",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "dev": "nodemon ."
+  },
+  "author": "Matias Wasiak",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^3.10.2",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.0.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.5.4",
+    "nodemon": "^2.0.19"
+  }
+}
