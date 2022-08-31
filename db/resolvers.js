@@ -202,6 +202,23 @@ const resolvers = {
       });
       return cliente;
     },
+    eliminarCliente: async (_, { id }, ctx) => {
+      // Verificar si existe o no
+      let cliente = await Cliente.findById(id);
+
+      if (!cliente) {
+        throw new Error("Ese cliente no existe");
+      }
+
+      // Verificar si el vendedor es quien elimina
+      if (cliente.vendedor.toString() !== ctx.usuario.id) {
+        throw new Error("No tienes las credenciales");
+      }
+
+      // Eliminar Cliente
+      await Cliente.findOneAndDelete({ _id: id });
+      return "Cliente eliminado";
+    },
   },
 };
 
