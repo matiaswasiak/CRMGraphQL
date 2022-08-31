@@ -46,6 +46,16 @@ const resolvers = {
         console.log(error);
       }
     },
+    obtenerClientesVendedor: async (_, {}, ctx) => {
+      try {
+        const clientes = await Cliente.find({
+          vendedor: ctx.usuario.id.toString(),
+        });
+        return clientes;
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   Mutation: {
     nuevoUsuario: async (_, { input }) => {
@@ -148,7 +158,7 @@ const resolvers = {
       const nuevoCliente = new Cliente(input);
 
       // Asignar el vendedor
-      nuevoCliente.vendedor = "630eb0c092f996599b76c0b8";
+      nuevoCliente.vendedor = "630ecd4ea4914919c9184391";
 
       // Guardarlo en la db
       try {
