@@ -105,6 +105,11 @@ const resolvers = {
       // Retornar el resultado
       return pedido;
     },
+    obtenerPedidosEstado: async (_, { estado }, ctx) => {
+      const pedidos = await Pedido.find({ vendedor: ctx.usuario.id, estado });
+
+      return pedidos;
+    },
   },
   Mutation: {
     nuevoUsuario: async (_, { input }) => {
