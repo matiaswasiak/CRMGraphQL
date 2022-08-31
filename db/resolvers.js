@@ -56,6 +56,21 @@ const resolvers = {
         console.log(error);
       }
     },
+    obtenerCliente: async (_, { id }, ctx) => {
+      // Revisar si el cliente existe o no
+      const cliente = await Cliente.findById(id);
+
+      if (!cliente) {
+        throw new Error("Cliente no encontrado");
+      }
+
+      // Quien lo creo puede verlo
+      if (cliente.vendedor.toString() !== ctx.usuario.id) {
+        throw new Error("No tienes las credenciales");
+      }
+
+      return cliente;
+    },
   },
   Mutation: {
     nuevoUsuario: async (_, { input }) => {
@@ -158,7 +173,7 @@ const resolvers = {
       const nuevoCliente = new Cliente(input);
 
       // Asignar el vendedor
-      nuevoCliente.vendedor = "630ecd4ea4914919c9184391";
+      nuevoCliente.vendedor = "630ed0829972fc60fd1be4b0";
 
       // Guardarlo en la db
       try {
