@@ -1,6 +1,8 @@
 const Usuario = require("../models/Usuario");
 const Producto = require("../models/Producto");
 const Cliente = require("../models/Cliente");
+const Pedido = require("../models/Pedido");
+
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config({ path: "variables.env" });
@@ -244,14 +246,23 @@ const resolvers = {
           throw new Error(
             `El articulo: ${producto.nombre} excede la cantidad disponible`
           );
+        } else {
+          // Restar la cantidad a lo disponible
+          producto.existencia = producto.existencia - articulo.cantidad;
+
+          await producto.save();
         }
       }
 
       // Crear un nuevo pedido
+      const nuevoPedido = new Pedido(input);
 
       // Asignarle un vendedor
+      nuevoPedido.vendedor = ctx.usuario.id;
 
       // Guardar en la base de datos
+      const resultado = await nuevoPedido.save();
+      return resultado;
     },
   },
 };
